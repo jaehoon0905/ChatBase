@@ -1,0 +1,16 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.chatbase.app
+productName: ChatBase
+files:
+  - filter:
+      - main.js
+      - index.html
+      - assets/**/*
+      - node_modules/**/*
+win:
+  target:
+    - portable
+  icon: assets/logo.ico
+electronVersion: 25.9.8
