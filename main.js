@@ -20,7 +20,6 @@ function createWindow() {
 
   // 메뉴 제거
   Menu.setApplicationMenu(null);
-  win.webContents.openDevTools();
 
   // React 앱이 빌드된 public 폴더의 index.html을 로드
   win.loadFile(path.join(__dirname, 'public', 'index.html'));
