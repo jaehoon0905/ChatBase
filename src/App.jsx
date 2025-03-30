@@ -31,9 +31,22 @@ const App = () => {
     setSelectedRoom(room);
   };
 
+  // DB 파일 닫기
+  const handleCloseDB = () => {
+    setDbPath(null);
+    setChatRooms([]);
+    setSelectedRoom(null);
+  };
+
+  // DB 파일 이름 추출
+  const getFileName = (path) => {
+    if (!path) return '';
+    return path.split('\\').pop().split('/').pop();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
+      <header className="bg-blue-600 text-white p-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
         <h1 className="text-2xl font-bold flex items-center">
           <img
             src="../assets/icon.png"
@@ -47,14 +60,26 @@ const App = () => {
           alt="Pay1oad"
           className="min-h-[40px] max-h-[60px]"
         />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded"
-          onClick={handleSelectDB}
-        >
-          찾아보기
-        </button>
+        {dbPath ? (
+          <div className="flex items-center bg-blue-500 px-4 py-2 rounded">
+            <span className="mr-3 max-w-xs truncate">{getFileName(dbPath)}</span>
+            <button 
+              onClick={handleCloseDB}
+              className="text-white hover:text-red-200 font-bold"
+            >
+              ✕
+            </button>
+          </div>
+        ) : (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded"
+            onClick={handleSelectDB}
+          >
+            찾아보기
+          </button>
+        )}
       </header>
-      <main className="flex flex-1">
+      <main className="flex flex-1 pt-[100px]">
         <aside className="w-1/3 border-r p-4 overflow-y-auto">
           <ChatRoomList
             chatRooms={chatRooms}

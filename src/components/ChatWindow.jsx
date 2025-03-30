@@ -7,7 +7,9 @@ const ChatWindow = ({ dbPath, room }) => {
 
   const fetchMessages = async () => {
     try {
-      const msgs = await window.api.getChatMessages(dbPath, room.ZNAME);
+      console.log('fetchMsg');
+      const msgs = await window.api.getChatMessages(dbPath, room.chatId);
+      console.log(msgs)
       setMessages(msgs);
     } catch (error) {
       console.error('Error:', error);
@@ -18,6 +20,8 @@ const ChatWindow = ({ dbPath, room }) => {
     // 채팅방 변경시 초기화
     setMessages([]);
     if (room) {
+      console.log('room')
+      console.log(room)
       fetchMessages();
     }
 
@@ -34,7 +38,12 @@ const ChatWindow = ({ dbPath, room }) => {
           <div className="text-gray-500">메시지 없음</div>
         ) : (
           messages.map((msg) => (
-            <ChatBubble key={msg.chatId} sender={msg.ZNAME} content={msg.message} />
+            <ChatBubble 
+              key={msg.chatId} 
+              sender={msg.ZNAME} 
+              content={msg.message} 
+              sentAt={msg.sentAt} 
+            />
           ))
         )}
       </div>

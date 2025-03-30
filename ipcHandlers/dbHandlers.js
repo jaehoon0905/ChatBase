@@ -19,8 +19,8 @@ ipcMain.handle('get-chat-rooms', async (event, dbPath) => {
         reject(err);
       }
     });
-    // 테이블 'chat_rooms'에 id와 room_name 컬럼이 있다고 가정합니다.
-    db.all("SELECT distinct(ZNAME) FROM Message", (err, rows) => {
+    // chatId와 ZNAME을 함께 조회하도록 수정
+    db.all("SELECT distinct chatId FROM Message", (err, rows) => {
       if (err) {
         reject(err);
       } else {
@@ -33,7 +33,7 @@ ipcMain.handle('get-chat-rooms', async (event, dbPath) => {
 });
 
 // 특정 채팅방의 메시지 조회: 테이블 "messages"에서 room_id로 필터링
-ipcMain.handle('get-chat-messages', async (event, { dbPath, roomId }) => {
+ipcMain.handle('get-chat-messages', async (event, { dbPath, chatId }) => {
   return new Promise((resolve, reject) => {
     const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
       if (err) {
@@ -42,13 +42,14 @@ ipcMain.handle('get-chat-messages', async (event, { dbPath, roomId }) => {
     });
     // messages 테이블에 id, room_id, sender, content, timestamp 컬럼 있다고 가정
     db.all(
-      "SELECT chatId, ZNAME, message, sentAt FROM Message WHERE ZNAME = ? ORDER BY sentAt ASC",
-      [roomId],
+      "SELECT chatId, ZNAME, message, sentAt FROM Message WHERE chatId = ? ORDER BY sentAt ASC",
+      [chatId],
       (err, rows) => {
         if (err) {
           reject(err);
         } else {
           resolve(rows);
+          console.log('dball', chatId, rows);
         }
         db.close();
       }

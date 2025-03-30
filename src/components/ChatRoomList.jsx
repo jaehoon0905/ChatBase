@@ -12,15 +12,15 @@ const ChatRoomList = ({ chatRooms, onSelectRoom, selectedRoom }) => {
         chatRooms.map((room) => (
 
           <div
-            key={room.ZNAME}
+            key={room.chatId}
             onClick={() => onSelectRoom(room)}
             className={`p-4 mb-2 border rounded cursor-pointer ${
-              selectedRoom && selectedRoom.ZNAME === room.ZNAME
+              selectedRoom && selectedRoom.chatId === room.chatId
                 ? 'bg-blue-100'
                 : 'bg-white hover:bg-gray-50'
             }`}
           >
-            <h3 className="font-semibold">{room.ZNAME}</h3>
+            <h3 className="font-semibold">{room.chatId}</h3>
           </div>
         ))
       )}
