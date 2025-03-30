@@ -9,7 +9,6 @@ const ChatRoomList = ({ chatRooms, onSelectRoom, selectedRoom }) => {
         <div className="text-gray-500">채팅 없음</div>
       ) : (
         chatRooms.map((room) => (
-
           <div
             key={room.chatId}
             onClick={() => onSelectRoom(room)}
@@ -19,7 +18,7 @@ const ChatRoomList = ({ chatRooms, onSelectRoom, selectedRoom }) => {
                 : 'bg-white hover:bg-gray-50'
             }`}
           >
-            <h3 className="font-semibold">{room.chatId}</h3>
+            <h3 className="font-semibold">{room.participants || room.chatId}</h3>
           </div>
         ))
       )}

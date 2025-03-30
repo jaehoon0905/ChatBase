@@ -11,7 +11,7 @@ ipcMain.handle('select-db', async () => {
   return result.canceled ? null : result.filePaths[0];
 });
 
-// 채팅방 목록 조회: 예를 들어 테이블 "chat_rooms"에 저장된 채팅방 정보를 불러온다고 가정
+// 채팅방 목록 조회: chatId와 참여자 이름을 함께 조회
 ipcMain.handle('get-chat-rooms', async (event, dbPath) => {
   return new Promise((resolve, reject) => {
     const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
@@ -19,14 +19,21 @@ ipcMain.handle('get-chat-rooms', async (event, dbPath) => {
         reject(err);
       }
     });
-    db.all("SELECT distinct chatId FROM Message", (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
+    
+    // 각 chatId 그룹별로 참여자 이름을 쉼표로 구분해서 연결
+    db.all(
+      `SELECT chatId, GROUP_CONCAT(DISTINCT ZNAME) AS participants 
+       FROM Message 
+       GROUP BY chatId`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+        db.close();
       }
-      db.close();
-    });
+    );
   });
 });
 
