@@ -7,9 +7,7 @@ const ChatWindow = ({ dbPath, room }) => {
 
   const fetchMessages = async () => {
     try {
-      console.log('fetchMsg');
       const msgs = await window.api.getChatMessages(dbPath, room.chatId);
-      console.log(msgs)
       setMessages(msgs);
     } catch (error) {
       console.error('Error:', error);
@@ -20,8 +18,6 @@ const ChatWindow = ({ dbPath, room }) => {
     // 채팅방 변경시 초기화
     setMessages([]);
     if (room) {
-      console.log('room')
-      console.log(room)
       fetchMessages();
     }
 
@@ -42,7 +38,8 @@ const ChatWindow = ({ dbPath, room }) => {
               key={msg.chatId} 
               sender={msg.ZNAME} 
               content={msg.message} 
-              sentAt={msg.sentAt} 
+              sentAt={msg.sentAt}
+              photoUrl={msg.ZPHOTOURL}
             />
           ))
         )}

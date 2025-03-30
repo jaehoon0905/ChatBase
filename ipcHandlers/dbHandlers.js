@@ -19,13 +19,11 @@ ipcMain.handle('get-chat-rooms', async (event, dbPath) => {
         reject(err);
       }
     });
-    // chatId와 ZNAME을 함께 조회하도록 수정
     db.all("SELECT distinct chatId FROM Message", (err, rows) => {
       if (err) {
         reject(err);
       } else {
         resolve(rows);
-        console.log(rows);
       }
       db.close();
     });
@@ -40,16 +38,14 @@ ipcMain.handle('get-chat-messages', async (event, { dbPath, chatId }) => {
         reject(err);
       }
     });
-    // messages 테이블에 id, room_id, sender, content, timestamp 컬럼 있다고 가정
     db.all(
-      "SELECT chatId, ZNAME, message, sentAt FROM Message WHERE chatId = ? ORDER BY sentAt ASC",
+      "SELECT chatId, ZNAME, message, sentAt, ZPHOTOURL FROM Message WHERE chatId = ? ORDER BY sentAt ASC",
       [chatId],
       (err, rows) => {
         if (err) {
           reject(err);
         } else {
           resolve(rows);
-          console.log('dball', chatId, rows);
         }
         db.close();
       }

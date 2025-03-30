@@ -2,7 +2,6 @@
 import React from 'react';
 
 const ChatRoomList = ({ chatRooms, onSelectRoom, selectedRoom }) => {
-    console.log(chatRooms);
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">채팅 목록</h2>

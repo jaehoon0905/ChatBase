@@ -10,15 +10,12 @@ const App = () => {
 
   // Select DB File
   const handleSelectDB = async () => {
-    console.log('handleSelectDB');
     const filePath = await window.api.selectDB();
-    console.log(filePath);
     if (filePath) {
       setDbPath(filePath);
       // 채팅방 목록 조회
       try {
         const rooms = await window.api.getChatRooms(filePath);
-        console.log(rooms);
         setChatRooms(rooms);
       } catch (error) {
         console.error('Error:', error);
