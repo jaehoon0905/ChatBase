@@ -50,7 +50,6 @@ const App = () => {
             alt="ChatBase"
             className="min-h-[40px] max-h-[60px] mr-2"
           />
-          ChatBase
         </h1>
         <img
           src="../assets/logo.png"
