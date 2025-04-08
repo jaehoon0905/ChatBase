@@ -21,12 +21,15 @@
             "output": "dist"
         },
         "win": {
-            "target": ["portable"],
+            "target": [
+                "portable"
+            ],
             "icon": "assets/logo.ico"
         }
     },
     "dependencies": {
         "electron": "^24.3.2",
+        "path-browserify": "^1.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "sqlite3": "^5.1.4"
@@ -38,14 +41,14 @@
         "autoprefixer": "^10.4.21",
         "babel-loader": "^9.2.1",
         "css-loader": "^7.1.2",
+        "electron": "^25.0.0",
+        "electron-builder": "^24.0.0",
         "html-webpack-plugin": "^5.6.3",
         "mini-css-extract-plugin": "^2.9.2",
         "postcss-loader": "^8.1.1",
         "tailwindcss": "^3.4.17",
         "webpack": "^5.98.0",
         "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^5.2.0",
-        "electron": "^25.0.0",
-        "electron-builder": "^24.0.0"
+        "webpack-dev-server": "^5.2.0"
     }
 }
